@@ -5,7 +5,11 @@ import { generateClient } from "aws-amplify/data";
 import { signInWithRedirect } from 'aws-amplify/auth';
 import { getCurrentUser } from 'aws-amplify/auth';
 import { fetchAuthSession } from 'aws-amplify/auth';
+import { Hub } from 'aws-amplify/utils';
 
+Hub.listen('auth', (data) => {
+  console.log(data)
+});
 
 const client = generateClient<Schema>();
 
