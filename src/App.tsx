@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import { signInWithRedirect } from 'aws-amplify/auth';
+import { getCurrentUser } from 'aws-amplify/auth';
 
 const client = generateClient<Schema>();
 
@@ -32,6 +33,11 @@ function App() {
           custom: 'OneLoginLogUInSAML',
         },
       });
+      const { username, userId, signInDetails } = await getCurrentUser();
+
+      console.log("username", username);
+      console.log("user id", userId);
+      console.log("sign-in details", signInDetails);
     } catch (error) {
       console.error('Error during sign-in:', error);
     }
@@ -40,6 +46,7 @@ function App() {
   return (
     <main>
       <button onClick={signInWithOneLogin}>Sign In with OneLogin</button>
+      <p></p>
       <h1>Todos</h1>
       <button onClick={createTodo}>+ new</button>
       <ul>
