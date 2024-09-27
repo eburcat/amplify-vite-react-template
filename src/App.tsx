@@ -2,9 +2,7 @@ import '@aws-amplify/ui-react/styles.css'
 import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
-import { signInWithRedirect } from 'aws-amplify/auth';
-import { getCurrentUser } from 'aws-amplify/auth';
-import { fetchAuthSession } from 'aws-amplify/auth';
+import { signInWithRedirect, getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
 import { Hub } from 'aws-amplify/utils';
 
 Hub.listen('auth', (data) => {
@@ -76,15 +74,6 @@ function App() {
       <p></p>
       <h1>Todos</h1>
       <button onClick={createTodo}>+ new</button>
-      <ul>
-        {todos.map((todo) => (
-          <li
-            onClick={() => deleteTodo(todo.id)}
-            key={todo.id}>
-            {todo.content}
-          </li>
-        ))}
-      </ul>
       <div>
         🥳 App successfully hosted. Try creating a new todo.
         <br />
