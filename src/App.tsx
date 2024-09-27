@@ -4,6 +4,8 @@ import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
 import { signInWithRedirect } from 'aws-amplify/auth';
 import { getCurrentUser } from 'aws-amplify/auth';
+import { fetchAuthSession } from 'aws-amplify/auth';
+
 
 const client = generateClient<Schema>();
 
@@ -50,11 +52,23 @@ function App() {
     }
   };
 
+  const getSession = async () => {
+    console.log("i");
+    try {
+      const session = await fetchAuthSession();
+      
+      console.log("id token", session.tokens?.idToken);
+      console.log("access token", session.tokens?.accessToken);
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+    }
+  };
 
   return (
     <main>
       <button onClick={signInWithOneLogin}>Sign In with OneLogin</button>
       <button onClick={getUser}>Get User Details</button>
+      <button onClick={getSession}>Get Session Details</button>
       <p></p>
       <h1>Todos</h1>
       <button onClick={createTodo}>+ new</button>
