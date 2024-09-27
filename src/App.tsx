@@ -43,9 +43,24 @@ function App() {
     }
   };
 
+  const getUser = async () => {
+    console.log("i");
+    try {
+      const { username, userId, signInDetails } = await getCurrentUser();
+
+      console.log("username", username);
+      console.log("user id", userId);
+      console.log("sign-in details", signInDetails);
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+    }
+  };
+
+
   return (
     <main>
       <button onClick={signInWithOneLogin}>Sign In with OneLogin</button>
+      <button onClick={getUser}>Get User Details</button>
       <p></p>
       <h1>Todos</h1>
       <button onClick={createTodo}>+ new</button>
