@@ -1,12 +1,13 @@
-import { Authenticator } from '@aws-amplify/ui-react'
 import '@aws-amplify/ui-react/styles.css'
 import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
+import { signInWithRedirect } from 'aws-amplify/auth';
 
 const client = generateClient<Schema>();
 
 function App() {
+
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
 
   useEffect(() => {
@@ -23,11 +24,23 @@ function App() {
     client.models.Todo.delete({id});
   }
 
+  const signInWithOneLogin = async () => {
+    console.log("h");
+    try {
+      await signInWithRedirect({
+        provider: {
+          custom: 'OneLoginLogUInSAML',
+        },
+      });
+    } catch (error) {
+      console.error('Error during sign-in:', error);
+    }
+  };
+
   return (
-    <Authenticator>
-      {({ signOut, user }) => (
     <main>
-      <h1>{user?.signInDetails?.loginId}'s todos</h1>
+      <button onClick={signInWithOneLogin}>Sign In with OneLogin</button>
+      <h1>Todos</h1>
       <button onClick={createTodo}>+ new</button>
       <ul>
         {todos.map((todo) => (
@@ -45,11 +58,8 @@ function App() {
           Review next step of this tutorial.
         </a>
       </div>
-      <button onClick={signOut}>Sign out</button>
     </main>
-  )}
-    </Authenticator>
-  );
+  )
 }
 
 export default App;

@@ -18,7 +18,9 @@ export type Schema = ClientSchema<typeof schema>;
 export const data = defineData({
   schema,
   authorizationModes: {
-    defaultAuthorizationMode: 'userPool',
+    // This tells the data client in your app (generateClient())
+    // to sign API requests with the user authentication token.
+    defaultAuthorizationMode: "userPool",
   },
 });
 
