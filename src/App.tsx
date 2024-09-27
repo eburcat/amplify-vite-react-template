@@ -33,11 +33,6 @@ function App() {
           custom: 'OneLoginLogUInSAML',
         },
       });
-      const { username, userId, signInDetails } = await getCurrentUser();
-
-      console.log("username", username);
-      console.log("user id", userId);
-      console.log("sign-in details", signInDetails);
     } catch (error) {
       console.error('Error during sign-in:', error);
     }
@@ -46,11 +41,10 @@ function App() {
   const getUser = async () => {
     console.log("i");
     try {
-      const { username, userId, signInDetails } = await getCurrentUser();
+      const { username, userId } = await getCurrentUser();
 
       console.log("username", username);
       console.log("user id", userId);
-      console.log("sign-in details", signInDetails);
     } catch (error) {
       console.error('Error during sign-in:', error);
     }
