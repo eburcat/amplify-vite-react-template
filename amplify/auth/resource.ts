@@ -15,10 +15,8 @@ export const auth = defineAuth({
           metadataType: 'URL', // or 'FILE'
         },
       },
-      logoutUrls: ['http://localhost:5173/', 'https://888b-46-121-0-58.ngrok-free.app/', 'https://main.d159opxp4nlbj5.amplifyapp.com/'],
+      logoutUrls: ['https://main.d159opxp4nlbj5.amplifyapp.com/'],
       callbackUrls: [
-        'http://localhost:5173/',
-        'https://888b-46-121-0-58.ngrok-free.app/',
         'https://main.d159opxp4nlbj5.amplifyapp.com/'
       ],
     },
