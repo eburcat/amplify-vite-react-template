@@ -2,7 +2,7 @@ import '@aws-amplify/ui-react/styles.css'
 //import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
-import { signInWithRedirect, getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
+import { signInWithRedirect, signOut, getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
 import { Hub } from 'aws-amplify/utils';
 
 Hub.listen('auth', (data) => {
@@ -42,6 +42,15 @@ function App() {
     }
   };
 
+  const signOutFunc = async () => {
+    console.log("j");
+    try {
+      await signOut();
+    } catch (error) {
+      console.error('Error during sign-out:', error);
+    }
+  };
+
   const getUser = async () => {
     console.log("i");
     try {
@@ -55,7 +64,7 @@ function App() {
   };
 
   const getSession = async () => {
-    console.log("i");
+    console.log("k");
     try {
       const session = await fetchAuthSession();
       
@@ -69,6 +78,7 @@ function App() {
   return (
     <main>
       <button onClick={signInWithOneLogin}>Sign In with OneLogin</button>
+      <button onClick={signOutFunc}>Sign out</button>
       <button onClick={getUser}>Get User Details</button>
       <button onClick={getSession}>Get Session Details</button>
       <p></p>
