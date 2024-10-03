@@ -5,11 +5,11 @@ import { generateClient } from "aws-amplify/data";
 import { signInWithRedirect, signOut, getCurrentUser, fetchUserAttributes, fetchAuthSession } from 'aws-amplify/auth';
 import { Hub } from 'aws-amplify/utils';
 
-Hub.listen('auth', ({payload}) => {
+Hub.listen('auth', async ({payload}) => {
   switch (payload.event) {
     case "signInWithRedirect":
-      const user = getCurrentUser();
-      const userAttributes = fetchUserAttributes();
+      const user = await getCurrentUser();
+      const userAttributes = await fetchUserAttributes();
       console.log({user, userAttributes});
       break;
     case "signInWithRedirect_failure":
