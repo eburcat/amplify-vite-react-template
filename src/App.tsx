@@ -2,11 +2,22 @@ import '@aws-amplify/ui-react/styles.css'
 //import { useEffect, useState } from "react";
 import type { Schema } from "../amplify/data/resource";
 import { generateClient } from "aws-amplify/data";
-import { signInWithRedirect, signOut, getCurrentUser, fetchAuthSession } from 'aws-amplify/auth';
+import { signInWithRedirect, signOut, getCurrentUser, fetchUserAttributes, fetchAuthSession } from 'aws-amplify/auth';
 import { Hub } from 'aws-amplify/utils';
 
-Hub.listen('auth', (data) => {
-  console.log(data)
+Hub.listen('auth', ({payload}) => {
+  switch (payload.event) {
+    case "signInWithRedirect":
+      const user = getCurrentUser();
+      const userAttributes = fetchUserAttributes();
+      console.log({user, userAttributes});
+      break;
+    case "signInWithRedirect_failure":
+      console.log(payload);
+      break;
+    default:
+      console.log(payload);
+  }
 });
 
 const client = generateClient<Schema>();
@@ -54,10 +65,9 @@ function App() {
   const getUser = async () => {
     console.log("i");
     try {
-      const { username, userId } = await getCurrentUser();
+      const currentUser = await getCurrentUser();
 
-      console.log("username", username);
-      console.log("user id", userId);
+      console.log(currentUser);
     } catch (error) {
       console.error('Error during sign-in:', error);
     }
